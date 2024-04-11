@@ -1,0 +1,20 @@
+[
+  {
+    "title": "audi a3 ",
+    "description": "auto",
+    "price": 30000,
+    "thumbnail": "http",
+    "code": 16,
+    "stock": 1,
+    "id": 1
+  },
+  {
+    "title": "banana",
+    "description": "fruta",
+    "price": 100,
+    "thumbnail": "http",
+    "code": 17,
+    "stock": 1,
+    "id": 2
+  }
+]

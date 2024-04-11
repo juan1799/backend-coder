@@ -53,27 +53,69 @@ class ProductManager {
     async getProducts (){
         
         const data = await fs.promises.readFile(STORAGE, 'utf-8');
-        const products = JSON.parse(data);
-        this.products = products;
-        console.table(this.products)
+        const productsParsed = JSON.parse(data);
+        console.table(productsParsed)
         
     }
+
     getProductById(id){
         const product = this.products.find(p => p.id === id)
         product != undefined ? console.log(product) : console.log("Not Found");
     }
+
+    async deleteProductById(id){
+        const index = this.products.findIndex(producto => producto.id === id);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+            const data = JSON.stringify(this.products, null, 2);
+            await fs.promises.writeFile(STORAGE, data);
+            console.log("Producto eliminado correctamente");   
+        }
+        else{ 
+            console.log("Producto no encontrado");
+        }
+        return this.products;
+    }
+
+    async updateProduct(id, modification) {
+        const productIndex = this.products.findIndex((p) => p.id === id);
+        if (productIndex !== -1) {
+            const updatedProduct = { ...this.products[productIndex], ...modification };
+            this.products[productIndex] = updatedProduct;
+
+            const data = JSON.stringify(this.products, null, 2);
+
+            try {
+                await fs.promises.writeFile(STORAGE, data);
+                console.log("Producto actualizado correctamente");
+            } catch (error) {
+                console.error("Error al actualizar el producto:", error);
+            }
+        } else {
+            throw new Error("Producto no encontrado");
+        }
+    }
+}
     
     
 
-}
+
 
 
 
 let productManager = new ProductManager()
 
-productManager.addProduct("pera", "fruta", 100, "http", 15, 1)
+await productManager.addProduct("pera", "fruta", 100, "http", 15, 1)
+await productManager.addProduct("manzana", "fruta", 100, "http", 16, 1)
+await productManager.addProduct("banana", "fruta", 100, "http", 17, 1)
+await productManager.getProducts()
+await productManager.deleteProductById(0)
+await productManager.updateProduct(1, { 
+    title: 'audi a3 ',
+    price: 30000, 
+    description: 'auto'
+})
+await productManager.getProducts()
 
-productManager.getProducts()
-productManager.getProductById(0)
 
 

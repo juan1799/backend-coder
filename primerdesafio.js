@@ -42,9 +42,16 @@ class ProductManager {
     getProducts(){
         console.table(this.products)
     }
-    getProductById(id){
-        const product = this.products.find(p => p.id === id)
-        product != undefined ? console.log(product) : console.log("Not Found");
+    // getProductById(id){
+    //     const product = this.products.find(p => p.id === id)
+    //     product != undefined ? console.log(product) : console.log("Not Found");
+    // }
+    deleteProductById(id){
+        const index = this.products.findIndex(producto => producto.id === id);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+        }
+        return this.products;
     }
 }
 
@@ -53,6 +60,8 @@ class ProductManager {
 let productManager = new ProductManager()
 
 productManager.addProduct("pera", "fruta", 100, "http", 15, 1)
-productManager.addProduct("pera", "fruta", 100, "http")
+productManager.addProduct("manzana", "fruta", 100, "http", 16, 1)
+productManager.addProduct("banan", "fruta", 100, "http", 17, 1)
 productManager.getProducts()
-productManager.getProductById(0)
+productManager.deleteProductById(0)
+productManager.getProducts()
