@@ -1,0 +1,11 @@
+[
+  {
+    "title": "pera",
+    "description": "fruta",
+    "price": 100,
+    "thumbnail": "http",
+    "code": 15,
+    "stock": 1,
+    "id": 0
+  }
+]
